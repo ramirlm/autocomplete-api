@@ -15,14 +15,6 @@ describe('Book Creation', () => {
       .expect(201);
     expect(response.body).toHaveProperty('createdId');
   });
-
-  it('should be able to create a book', async () => {
-    const response = await request(app)
-      .post('/books')
-      .send(book)
-      .expect(201);
-    expect(response.body).toHaveProperty('createdId');
-  });
 });
 
 describe('Book Query', () => {
