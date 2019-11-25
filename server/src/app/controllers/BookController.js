@@ -12,7 +12,7 @@ class BookController {
   }
 
   async query(req, res) {
-    const qry = req.body.query.toLowerCase();
+    const qry = req.params.qry.toLowerCase();
 
     const books = await book.findAll({
       where: {
