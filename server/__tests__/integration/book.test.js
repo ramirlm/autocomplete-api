@@ -1,7 +1,6 @@
 import request from 'supertest';
 import app from '../../src/app';
 
-// Beforeall or migration???
 const book = {
   title: 'Lord of The Rings',
   author: 'JRR Tolkien',
@@ -20,6 +19,10 @@ describe('Book Creation', () => {
 
 describe('Book Query', () => {
   it('should be able to find books by title', async done => {
+    await request(app)
+      .post('/books')
+      .send(book);
+
     const response = await request(app)
       .get('/books/')
       .query({ q: book.title })
