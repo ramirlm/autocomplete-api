@@ -1,10 +1,17 @@
+import { Sequelize } from 'sequelize/types';
 import book from '../models/Book';
 
 class BookController {
   async store(req, res) {
-    const books = book.findAll({
+    const qry = req.body.query.toLowerCase();
+
+    const books = await book.findAll({
       where: {
-        title: req.params.query,
+        title: Sequelize.where(
+          Sequelize.fn('LOWER', Sequelize.col('title')),
+          'LIKE',
+          `%${qry}%`
+        ),
       },
     });
     return res.status(200).json(books);
