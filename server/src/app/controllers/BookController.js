@@ -12,11 +12,11 @@ class BookController {
   }
 
   async query(req, res) {
-    const qry = req.params.qry.toLowerCase();
+    const query = req.query.q;
 
     const books = await book.findAll({
       where: {
-        title: { [Op.like]: `%${qry}%` },
+        title: { [Op.like]: `%${query}%` },
       },
     });
     return res.status(200).json(books);

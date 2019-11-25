@@ -7,8 +7,6 @@ class Book extends Model {
         title: Sequelize.STRING,
         author: Sequelize.STRING,
         year: Sequelize.INTEGER,
-        created_at: Sequelize.DATE,
-        updated_at: Sequelize.DATE,
       },
       {
         sequelize,
