@@ -3,31 +3,67 @@ A Node.JS API to provide the creation and querying of books.
 
 ### Features
 - The Book Query searches for any of the Book's fields.
-- The result of books is limited to 10 records, once the API is built for serving an Autocomplete application, this decision was to not compromise client's processing.
-- The search query is case insensitive, finding
+- The result of books is limited to 10 records, once the API is built for serving an Autocomplete application, this decision was taken to not compromise client's processing and avoid a performance lack.
+- The search query is case insensitive, and searches at any part of the fields
+- The year may be searched by using a structure of ":"
 
 ### Project Structure
 The Book-Fetch API is built using a Router-Controller pattern,
 
-### Assumptions
-- Docker needs to be installed on the host machine
-
-### Book Structure
-- JSON Example:
-
 ### Installation
-The Book-Fetch API
-- Docker DB
-- Migrations
+Book-Fetch API requires [Node.js](https://nodejs.org/) v4+ to run.
 
+Install the dependencies and devDependencies and start the server.
+
+With [npm](https://npm.org/)
+```sh
+$ cd book-fetch-api
+$ npm install
+```
+With [yarn](https://yarnpkg.com/)
+```sh
+$ cd book-fetch-api
+$ yarn install
+```
 ### Executing
--
+To run in DEV environment, it's possible to execute directly with your package manader:
+
+With [npm](https://npm.org/)
+```sh
+$ npm run dev
+```
+With [yarn](https://yarnpkg.com/)
+```sh
+$ yarn dev
+```
+
+The Book-fetch API has a Dockerfile in its root to automatically download the dependencies and execute the application using docker.io[https://docker.io]. Make sure you have Docker installed in your machine, and follow the steps below:
+First build the image, then run it, using the following commands:
+```sh
+$ docker build -t <YOUR_USER>/book-fetch-api:${package.json.version} .
+```
+The project also needs a database to store the books. You can set-up your own database by modifying the file (config.database.js)['/server/src/config/database.js'] to set your preferred DB `dialect`, and set the variables `DB_HOST`, `DB_USER`, `DB_PASS` and `DB_NAME` to your preferred database. For this, you may create local environment variables, create a .env file in the root of this project. If using docker, you can add the variables inline by using `docker run -e "DB_HOST=<HOST>" -e "DB_NAME=...` command, or set them in the Dockerfile by using the `ENV` command.
+
+Then, run your command
+### Book Structure
+This JSON Structure Example for inserting a Book:
+```json
+{
+	"title": "The Lord of The Rings",
+	"author": "J.R.R Tolkien",
+	"year": "1954"
+}
+```
+Title and Author Fields are required. The Year is an optional field.
+In case of a missing field, the application will return a `404` error with an `error` message
 
 ### Storing a Book
 Run the following POST requisiton to the Server will store a Book:
 ```sh
 $ curl -d '{"title":"TITLE_VALUE", "author":"AUTHOR_VALUE", "year": "YEAR_VALUE"}' -H "Content-Type: application/json" -X POST http://localhost:3333/books
 ```
+The returned value is an Array of `books`, containing a maximum of 10 records.
+
 ### Running Tests
 To run the test suite with YARN:
 ```sh
@@ -38,6 +74,12 @@ To run the test suite with NPM:
 $ npm run test
 ```
 
+Coverage information is displayed and saved in the folder `__tests__/coverage`
+
 ### Deploying to Production
 
 ## Future Improvements
+- Integration with external services to fetch reviews;
+- Implementing the Frontend;
+- Additional Fields and metadata;
+- Rating service;
