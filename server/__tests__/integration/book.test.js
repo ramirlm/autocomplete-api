@@ -19,8 +19,8 @@ describe('Book Creation', () => {
   it('should return a 404 when no title is sent', async () => {
     const response = await request(app)
       .post('/books')
-      .send(Object.assign({}, book, { title: undefined }))
-      .expect(201);
+      .send({ author: book.author, year: book.year })
+      .expect(404);
     expect(response.body).toHaveProperty('createdId');
   });
 });
