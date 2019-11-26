@@ -23,6 +23,14 @@ describe('Book Creation', () => {
       .expect(404);
     expect(response.body).toHaveProperty('error');
   });
+
+  it('should return a 404 when no author is sent', async () => {
+    const response = await request(app)
+      .post('/books')
+      .send({ title: book.title, year: book.year })
+      .expect(404);
+    expect(response.body).toHaveProperty('error');
+  });
 });
 
 describe('Book Query', () => {
