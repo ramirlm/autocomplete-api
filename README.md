@@ -1,23 +1,11 @@
-# book-fetch-api
-A Node.JS API to provide the creation and querying of books.
+# Book-Fetch API (Server Instructions)
+Access the Server docs (here)['/server/README.md']
 
-## Features
+# Book-Fetch Web 
+To be implemented
 
-## Project Structure
-
-## Assumptions
-- The user won't be able to...
-
-## Book Structure
-- JSON Example:
-
-## Installation
-
-## Executing
-
-## Storing a Book
-
-## Running Tests
-
-## Deploying Production
-
+## Future Improvements
+- Implementing the Frontend;
+- Integration with external services to fetch reviews;
+- Additional Fields and metadata;
+- Book Rating;
