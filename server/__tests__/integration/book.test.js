@@ -58,5 +58,14 @@ describe('Book Query', () => {
     done();
   });
 
+  it('should be able to find books by title with whitespaces', async done => {
+    const response = await request(app)
+      .get('/books')
+      .query({ q: book.title.toUpperCase() })
+      .expect(200);
+    expect(response.body.books[0].title).toBe(book.title);
+    done();
+  });
+
   // TODO should return no more than 10 records
 });
