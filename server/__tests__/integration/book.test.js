@@ -15,6 +15,14 @@ describe('Book Creation', () => {
       .expect(201);
     expect(response.body).toHaveProperty('createdId');
   });
+
+  it('should return a 404 when no title is sent', async () => {
+    const response = await request(app)
+      .post('/books')
+      .send(Object.assign({}, book, { title: undefined }))
+      .expect(201);
+    expect(response.body).toHaveProperty('createdId');
+  });
 });
 
 describe('Book Query', () => {
@@ -64,6 +72,14 @@ describe('Book Query', () => {
       .query({ q: book.title.toUpperCase() })
       .expect(200);
     expect(response.body.books[0].title).toBe(book.title);
+    done();
+  });
+
+  it('should return a status code 404 when no query is sent', async done => {
+    const response = await request(app)
+      .get('/books')
+      .expect(404);
+    expect(response.body.error).toBe('No query sent!');
     done();
   });
 
