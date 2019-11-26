@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import sequelize from 'sequelize';
 import book from '../models/Book';
 
 class BookController {
@@ -12,12 +12,14 @@ class BookController {
   }
 
   async query(req, res) {
-    const query = req.query.q;
+    const query = req.query.q.toLowerCase();
 
     const books = await book.findAll({
-      where: {
-        title: { [Op.like]: `%${query}%` },
-      },
+      where: sequelize.where(
+        sequelize.fn('LOWER', sequelize.col('title')),
+        'LIKE',
+        `%${query}%`
+      ),
     });
     return res.status(200).json(books);
   }

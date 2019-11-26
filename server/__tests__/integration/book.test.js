@@ -24,7 +24,7 @@ describe('Book Query', () => {
       .send(book);
 
     const response = await request(app)
-      .get('/books/')
+      .get('/books')
       .query({ q: book.title })
       .expect(200);
     expect(response.body.books[0].title).toBe(book.title);
@@ -33,7 +33,7 @@ describe('Book Query', () => {
 
   it('should be able to find books by author', async done => {
     const response = await request(app)
-      .get('/books/')
+      .get('/books')
       .query({ q: book.author })
       .expect(200);
     expect(response.body.books[0].author).toBe(book.author);
@@ -42,7 +42,7 @@ describe('Book Query', () => {
 
   it('should be able to find books by year', async done => {
     const response = await request(app)
-      .get('/books/')
+      .get('/books')
       .query({ q: book.year })
       .expect(200);
     expect(response.body.books[0].year).toBe(book.year);
@@ -51,10 +51,12 @@ describe('Book Query', () => {
 
   it('should be able to find books by title case-agnostically', async done => {
     const response = await request(app)
-      .get('/books/')
+      .get('/books')
       .query({ q: book.title.toUpperCase() })
       .expect(200);
     expect(response.body.books[0].title).toBe(book.title);
     done();
   });
+
+  // TODO should return no more than 10 records
 });
