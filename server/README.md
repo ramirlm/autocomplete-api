@@ -37,19 +37,28 @@ With [yarn](https://yarnpkg.com/)
 $ yarn dev
 ```
 
-When executing directly the application with NPM, it's also necessary to execute the migrations to create the initial DB structure, running the command below:
-
 The Book-fetch API has a Development (Dockerfile)['/server/Dockerfile.dev'] in the project root to automatically download the dependencies and execute the application using (docker.io)[https://docker.io]. Make sure you have Docker installed in your machine, and follow the steps below:
 
 First, build the docker image:
 ```sh
 $ docker build -t <YOUR_USER>/book-fetch-api:1.0.0 .
 ```
-The project also needs a database to store the books. You can set-up your own database by modifying the file (config.database.js)['/server/src/config/database.js'] to set your preferred DB `dialect`, and set the variables `DB_HOST`, `DB_USER`, `DB_PASS` and `DB_NAME` to your preferred database. For this, you may create local environment variables, create a .env file in the root of this project. If using docker, you can add the variables inline by using `docker run -e "DB_HOST=<HOST>" -e "DB_NAME=...` command, or set them in the Dockerfile by using the `ENV` command.
+By default, this application is configured to use `sqlite` database. You can set-up your own database by modifying the file (config.database.js)['/server/src/config/database.js'] to set your preferred DB `dialect`, and set the variables `DB_HOST`, `DB_USER`, `DB_PASS` and `DB_NAME` to your preferred database. For this, you may create local environment variables, create a .env file in the root of this project. If using docker, you can add the variables inline by using `docker run -e "DB_HOST=<HOST>" -e "DB_NAME=...` command, or set them in the Dockerfile by using the `ENV` command.
 
 To execute the created image, use the `docker run` command as below:
 ```sh
 $ docker run -v ${PWD}:/srv/server -v /srv/server/node_modules -p 3333:3333 --rm <YOUR_USER>/book-fetch-api:1.0.0
+```
+When using your own Database, it's necessary to execute the DB migration command, as follows:
+
+NPM(X):
+```sh
+$ npx sequelize-cli db:migrate
+```
+
+YARN:
+```sh
+$ yarn sequelize db:migrate
 ```
 
 ### Book Structure
