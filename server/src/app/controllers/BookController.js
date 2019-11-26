@@ -1,4 +1,3 @@
-import ValidationError from 'sequelize';
 import book from '../models/Book';
 
 class BookController {
@@ -7,10 +6,7 @@ class BookController {
       const createdBook = await book.create(req.body);
       return res.status(201).json({ createdId: createdBook.id });
     } catch (error) {
-      if (error instanceof ValidationError) {
-        return res.status(404).json({ error: error.message });
-      }
-      return res.status(500).json({ error: error.message });
+      return res.status(404).json({ error: error.message });
     }
   }
 
