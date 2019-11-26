@@ -21,7 +21,7 @@ describe('Book Creation', () => {
       .post('/books')
       .send({ author: book.author, year: book.year })
       .expect(404);
-    expect(response.body).toHaveProperty('createdId');
+    expect(response.body).toHaveProperty('error');
   });
 });
 
