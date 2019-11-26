@@ -12,6 +12,9 @@ class BookController {
 
   async query(req, res) {
     const query = req.query.q;
+    if (!query) {
+      return res.status(404).json({ error: 'No query sent!' });
+    }
     const queryNumber = isNaN(parseInt(query, 0)) ? 0 : parseInt(query, 0);
 
     const books = await book.sequelize.query(
